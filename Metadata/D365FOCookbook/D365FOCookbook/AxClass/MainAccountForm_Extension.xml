@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxClass xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>MainAccountForm_Extension</Name>
+	<SourceCode>
+		<Declaration><![CDATA[
+[ExtensionOf(formstr(MainAccount))]
+final class MainAccountForm_Extension
+{
+}
+]]></Declaration>
+		<Methods>
+			<Method>
+				<Name>FilterName_OnModified</Name>
+				<Source><![CDATA[
+    [FormControlEventHandler(
+        formControlStr(MainAccount, FilterName), 
+        FormControlEventType::Modified)]
+    public void FilterName_OnModified(FormControl sender, FormControlEventArgs e)
+    {
+        FormDataSource mainAccount_ds = sender.formRun().dataSource(
+            formdatasourcestr(MainAccount, MainAccount));
+        mainAccount_ds.executeQuery();
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>FilterType_OnModified</Name>
+				<Source><![CDATA[
+    [FormControlEventHandler(
+        formControlStr(MainAccount, FilterType), 
+        FormControlEventType::Modified)]
+    public void FilterType_OnModified(FormControl sender, FormControlEventArgs e)
+    {
+        FormDataSource mainAccount_ds = sender.formRun().dataSource(
+            formdatasourcestr(MainAccount, MainAccount));
+        mainAccount_ds.executeQuery();
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>MainAccount_OnQueryExecuting</Name>
+				<Source><![CDATA[
+    [FormDataSourceEventHandler(
+        formDataSourceStr(MainAccount, MainAccount), 
+        FormDataSourceEventType::QueryExecuting)]
+    public void MainAccount_OnQueryExecuting(FormDataSource sender, FormDataSourceEventArgs e)
+    {
+        QueryBuildRange qbrName;
+        QueryBuildRange qbrType;
+        QueryBuildDataSource qbds = sender.query().dataSourceTable(tableNum(MainAccount));
+
+        MainAccount::updateBalances();
+        qbrName = SysQuery::findOrCreateRange(qbds, fieldNum(MainAccount, Name));
+        qbrType = SysQuery::findOrCreateRange(qbds, fieldNum(MainAccount, Type));
+        str filterText = this.design().controlName("FilterName").valueStr();
+        if (filterText)
+        {
+            qbrName.value(SysQuery::valueLike(filterText));
+        }
+        else
+        {
+            qbrName.value(SysQuery::valueUnlimited());
+        }
+        if (FilterType.selection() == DimensionLedgerAccountType::Blank)
+        {
+            qbrType.value(SysQuery::valueUnlimited());
+        }
+        else
+        {
+            qbrType.value(queryValue(FilterType.selection()));
+        }
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>MainAccount_OnQueryExecuted</Name>
+				<Source><![CDATA[
+    [FormDataSourceEventHandler(
+        formDataSourceStr(MainAccount, MainAccount), 
+        FormDataSourceEventType::QueryExecuted)] 
+    public void MainAccount_OnQueryExecuted(FormDataSource sender, FormDataSourceEventArgs e)
+    {
+        this.createTree();
+    }
+
+]]></Source>
+			</Method>
+		</Methods>
+	</SourceCode>
+</AxClass>

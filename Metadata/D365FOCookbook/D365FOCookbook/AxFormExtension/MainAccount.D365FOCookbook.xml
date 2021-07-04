@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxFormExtension xmlns:i="http://www.w3.org/2001/XMLSchema-instance" xmlns="Microsoft.Dynamics.AX.Metadata.V6">
+	<Name>MainAccount.D365FOCookbook</Name>
+	<ControlModifications />
+	<Controls>
+		<AxFormExtensionControl xmlns="">
+			<Name>FormExtensionControlmzldy3zl1</Name>
+			<FormControl xmlns=""
+				i:type="AxFormGroupControl">
+				<Name>Filter</Name>
+				<AutoDeclaration>Yes</AutoDeclaration>
+				<Type>Group</Type>
+				<FormControlExtension
+					i:nil="true" />
+				<Controls>
+					<AxFormControl xmlns=""
+						i:type="AxFormStringControl">
+						<Name>FilterName</Name>
+						<AutoDeclaration>Yes</AutoDeclaration>
+						<Type>String</Type>
+						<FormControlExtension
+							i:nil="true" />
+						<ExtendedDataType>AccountName</ExtendedDataType>
+					</AxFormControl>
+					<AxFormControl xmlns=""
+						i:type="AxFormComboBoxControl">
+						<Name>FilterType</Name>
+						<AutoDeclaration>Yes</AutoDeclaration>
+						<Type>ComboBox</Type>
+						<FormControlExtension
+							i:nil="true" />
+						<EnumType>DimensionLedgerAccountType</EnumType>
+						<Selection>10</Selection>
+						<Items />
+					</AxFormControl>
+				</Controls>
+			</FormControl>
+			<Parent>NavigationList</Parent>
+			<PositionType>AfterItem</PositionType>
+			<PreviousSibling>TreeFilter</PreviousSibling>
+		</AxFormExtensionControl>
+	</Controls>
+	<DataSourceModifications />
+	<DataSourceReferences />
+	<DataSources />
+	<Parts />
+	<PropertyModifications />
+</AxFormExtension>

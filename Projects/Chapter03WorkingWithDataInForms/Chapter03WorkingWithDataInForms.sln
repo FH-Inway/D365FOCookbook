@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.1525
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FC65038C-1B2F-41E1-A629-BED71D161FFF}") = "Recipe02CreatingACustomFilterControl (USR) [StackOverflow]", "Recipe02CreatingACustomFilterControl\Recipe02CreatingACustomFilterControl.rnrproj", "{B935C035-13C4-4E27-9E0A-4D8C17F59EC1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B935C035-13C4-4E27-9E0A-4D8C17F59EC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B935C035-13C4-4E27-9E0A-4D8C17F59EC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7A83CC26-5C5C-4B47-BC25-142467D73675}
+	EndGlobalSection
+EndGlobal
