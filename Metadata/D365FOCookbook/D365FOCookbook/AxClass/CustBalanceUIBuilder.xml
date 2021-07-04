@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxClass xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>CustBalanceUIBuilder</Name>
+	<SourceCode>
+		<Declaration><![CDATA[
+class CustBalanceUIBuilder extends SysOperationAutomaticUIBuilder
+{
+    DialogField dialogFieldAllowModifyDate;
+    DialogField dialogFieldTransDate;
+    CustBalanceDataContract custBalanceDataContract;
+    
+}
+]]></Declaration>
+		<Methods>
+			<Method>
+				<Name>allowModifyDateModified</Name>
+				<Source><![CDATA[
+    public boolean allowModifyDateModified(FormCheckBoxControl
+        _checkBoxControl)
+    {
+        // set enabled or disabled based on checkbox
+        dialogFieldTransDate.enabled(any2enum(dialogFieldAllowModifyDate.value()));
+        // or alternatively
+        // dialogFieldTransDate.enabled(_checkBoxControl.checked());
+        return true;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>postBuild</Name>
+				<Source><![CDATA[
+    public void postBuild()
+    {
+        super();
+
+        // get datacontract
+        custBalanceDataContract = this.dataContractObject();
+        // get dialog fields
+        dialogFieldTransDate= this.bindInfo().getDialogField(
+            custBalanceDataContract,
+            methodstr(custBalanceDataContract, parmTransDate));
+        dialogFieldAllowModifyDate = this.bindInfo().getDialogField(
+            custBalanceDataContract, 
+            methodstr(custBalanceDataContract, parmAllowModifyDate));
+        // register override methods
+        dialogFieldAllowModifyDate.registerOverrideMethod(
+            methodstr(FormCheckBoxControl, modified),
+            methodstr(CustBalanceUIBuilder, allowModifyDateModified), 
+            this);
+        dialogFieldTransDate.enabled(any2enum(dialogFieldAllowModifyDate.value()));
+    }
+
+]]></Source>
+			</Method>
+		</Methods>
+	</SourceCode>
+</AxClass>

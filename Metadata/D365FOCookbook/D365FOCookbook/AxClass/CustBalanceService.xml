@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxClass xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>CustBalanceService</Name>
+	<SourceCode>
+		<Declaration><![CDATA[
+class CustBalanceService
+{
+}
+]]></Declaration>
+		<Methods>
+			<Method>
+				<Name>processData</Name>
+				<Source><![CDATA[
+    [SysEntryPointAttribute]
+    public void processData(CustBalanceDataContract _custBalanceDataContract)
+    {
+        QueryRun queryRun;
+        CustTable custTable;
+        Amount balance;
+
+        // create a new queryrun object
+        queryRun = new queryRun(_custBalanceDataContract.getQuery());
+        // loop all results from the query
+        while(queryRun.next())
+        {
+            custTable = queryRun.get(tableNum(custTable));
+            if(_custBalanceDataContract.parmTransDate())
+            {
+                balance = custTable.balanceMST(dateNull(), _custBalanceDataContract.parmTransDate());
+            }
+            else
+            {
+                balance = custTable.balanceMST();
+            }
+            // display the balance
+            info(strFmt("%1 - %2",custTable.AccountNum,balance));
+        }
+    }
+
+]]></Source>
+			</Method>
+		</Methods>
+	</SourceCode>
+</AxClass>

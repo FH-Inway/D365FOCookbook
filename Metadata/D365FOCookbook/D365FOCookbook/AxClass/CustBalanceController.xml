@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxClass xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>CustBalanceController</Name>
+	<SourceCode>
+		<Declaration><![CDATA[
+class CustBalanceController extends SysOperationServiceController
+{
+    str packedQuery;
+    CustBalanceDataContract contract;
+
+}
+]]></Declaration>
+		<Methods>
+			<Method>
+				<Name>setRanges</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Sets the query ranges based on caller.
+    /// </summary>
+    /// <param name="_query">
+    /// The hold the <c>Query</c> object of the service.
+    /// </param>
+    public void setRanges()
+    {
+        QueryBuildRange queryBuildRange;
+        QueryBuildDataSource queryBuildDataSource;
+        FormDataSource custTableDS;
+        CustTable custTable;
+        str range;
+        Query _query;
+
+        contract = this.getDataContractObject() as CustBalanceDataContract;
+        _query = contract.getQuery();
+        if (this.parmArgs()
+            && this.parmArgs().caller()
+            && this.parmArgs().dataset() == tableNum(CustTable))
+        {
+            custTableDS = FormDataUtil::getFormDataSource(this.parmArgs().record());
+            if (_query && custTableDS)
+            {
+                // build range
+                for (custTable = custTableDS.getFirst(true) ? custTableDS.getFirst(true) : custTableDS.cursor();
+                    custTable;
+                    custTable = custTableDS.getNext())
+                {
+                    range = range == '' ? custTable.AccountNum : range
+                        + ',' + custTable.AccountNum;
+                }
+                if (range)
+                {
+                    queryBuildDataSource = _query.dataSourceTable(tableNum(CustTable));
+                    // check for QueryBuildDataSource
+                    if (queryBuildDataSource)
+                    {
+                        // clear the old range,and then add it
+                        queryBuildDataSource.clearRanges();
+                        if (!queryBuildRange)
+                        {
+                            queryBuildRange = queryBuildDataSource.addRange(fieldNum(CustTable, AccountNum));
+                        }
+                        queryBuildRange.value(range);
+                    }
+                }
+            }
+        }
+        contract .setQuery(_query);
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>main</Name>
+				<Source><![CDATA[
+    public static void main(Args _args)
+    {
+        CustBalanceController controller = new CustBalanceController(
+            classStr(CustBalanceService),
+            methodStr(CustBalanceService, processData),
+            SysOperationExecutionMode::Synchronous);
+        controller.parmArgs(_args);
+        controller.setRanges();
+        controller.startOperation();
+    }
+
+]]></Source>
+			</Method>
+		</Methods>
+	</SourceCode>
+</AxClass>

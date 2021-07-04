@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxClass xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>CustBalanceDataContract</Name>
+	<SourceCode>
+		<Declaration><![CDATA[
+[
+    DataContractAttribute,
+    SysOperationContractProcessingAttribute(classStr(CustBalanceUIBuilder)),
+    SysOperationGroupAttribute('Date',"@ApplicationPlatform:SingleSpace", '1')
+]
+class CustBalanceDataContract implements SysOperationValidatable
+{
+    NoYesId allowModifyDate;
+    TransDate transDate;
+    str packedQuery;
+    
+}
+]]></Declaration>
+		<Methods>
+			<Method>
+				<Name>parmTransDate</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Gets or sets the value of the datacontract parameter
+    /// DateTransactionDate.
+    /// </summary>
+    /// <param name="_transDate">
+    /// The new value of the datacontract parameter
+    /// DateTransactionDate;
+    /// </param>
+    /// <returns>
+    /// The current value of datacontract parameter
+    /// DateTransactionDate
+    /// </returns>
+    [
+        DataMemberAttribute('DateTransactionDate'),
+        SysOperationLabelAttribute(literalStr("@SYS11284")),
+        SysOperationGroupMemberAttribute('Date'),
+        SysOperationDisplayOrderAttribute('1') // today's date
+    ]
+    public TransDate parmTransDate(TransDate _transDate = transDate)
+    {
+        transDate = _transDate;
+        return transDate;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>parmAllowModifyDate</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Gets or sets the value of the datacontract parameter
+    /// DateControl.
+    /// </summary>
+    /// <param name="_allowModifyDate">
+    /// The new value of the datacontract parameter
+    /// DateControl;
+    /// </param>
+    /// <returns>
+    /// The current value of datacontract parameter
+    /// DateControl
+    /// </returns>
+    [
+        DataMemberAttribute('DateControl'),
+        SysOperationLabelAttribute("Enable date control"),
+        SysOperationGroupMemberAttribute('Date'),
+        SysOperationDisplayOrderAttribute('0')
+    ]
+    public NoYesId parmAllowModifyDate(NoYesId _allowModifyDate = allowModifyDate)
+    {
+        allowModifyDate = _allowModifyDate;
+        return allowModifyDate;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>validate</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Validates the dialog values for errors.
+    /// </summary>
+    /// <returns>
+    /// false if an error has occurred in the dialog values;
+    /// otherwise, true .
+    /// </returns>
+    /// <remarks>
+    /// The dialog values are handled through the contract.
+    /// </remarks>
+    public boolean validate()
+    {
+        boolean ret = true;
+        if (!transDate && allowModifyDate)
+        {
+            ret = checkFailed('Transaction date cannot be empty');
+        }
+        return ret;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>parmQuery</Name>
+				<Source><![CDATA[
+    [
+        DataMemberAttribute,
+        AifQueryTypeAttribute('_packedQuery', querystr(CustTableSRS))
+    ]
+    public str parmQuery(str _packedQuery = packedQuery)
+    {
+        packedQuery = _packedQuery;
+        return packedQuery;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>getQuery</Name>
+				<Source><![CDATA[
+    public Query getQuery()
+    {
+        return new Query(SysOperationHelper::base64Decode(packedQuery));
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>setQuery</Name>
+				<Source><![CDATA[
+    public void setQuery(Query _query)
+    {
+        packedQuery = SysOperationHelper::base64Encode(_query.pack());
+    }
+
+]]></Source>
+			</Method>
+		</Methods>
+	</SourceCode>
+</AxClass>

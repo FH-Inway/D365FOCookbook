@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.1525
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FC65038C-1B2F-41E1-A629-BED71D161FFF}") = "Recipe03-CreatingDialogsUsingTheSysOperationFW (USR) [D3FOTools]", "Recipe03-CreatingDialogsUsingTheSysOperationFW\Recipe03-CreatingDialogsUsingTheSysOperationFW.rnrproj", "{37C05B0C-D642-4660-8F20-308CA1C47200}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{37C05B0C-D642-4660-8F20-308CA1C47200}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37C05B0C-D642-4660-8F20-308CA1C47200}.Debug|Any CPU.Build.0 = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9B1FCD17-04C9-4BCD-B2F3-EC415D8492F7}
+	EndGlobalSection
+EndGlobal
